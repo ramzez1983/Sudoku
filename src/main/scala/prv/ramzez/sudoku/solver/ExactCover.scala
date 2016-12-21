@@ -1,23 +1,10 @@
 package prv.ramzez.sudoku.solver
 
+import prv.ramzez.sudoku.matrix.Matrix
+
 /**
   * Created by Ramzez on 2016-12-10.
   */
-
-trait Matrix {
-  def apply(row: Int, column: Int): Int
-
-  def isEmpty: Boolean
-
-  def getColumn(column: Int): List[Int]
-
-  def removeColumn(column: Int): Matrix
-
-  def getRow(row: Int): List[Int]
-
-  def removeRow(row: Int): Matrix
-}
-
 trait ExactCover {
 
   def chooseColumn(matrix: Matrix): List[Int]
