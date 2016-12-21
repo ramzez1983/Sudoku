@@ -14,6 +14,6 @@ class ExactCoverSpec extends UnitSpec with ExactCover {
       List(0, 0, 0, 1, 1, 0, 1),
       List(0, 0, 1, 0, 1, 1, 0),
       List(0, 1, 1, 0, 0, 1, 1),
-      List(0, 1, 0, 0, 0, 0, 1)))) shouldEqual List(2,4,6)
+      List(0, 1, 0, 0, 0, 0, 1)))) shouldEqual List(List(2,4,6))
   }
 }
