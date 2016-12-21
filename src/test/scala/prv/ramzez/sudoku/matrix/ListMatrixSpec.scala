@@ -1,12 +1,13 @@
 package prv.ramzez.sudoku.matrix
 
-import _root_.prv.ramzez.sudoku.matrix.prv.ramzez.sudoku.matrix.impl.ListMatrix
+import _root_.prv.ramzez.sudoku.UnitSpec
+import _root_.prv.ramzez.sudoku.matrix.impl.ListMatrix
 import org.scalatest._
 
 /**
   * Created by Ramzez on 2016-12-21.
   */
-class ListMatrixSpec extends FlatSpec with Matchers {
+class ListMatrixSpec extends UnitSpec {
 
   private val rowOne: List[Int] = List(1, 2, 7)
   private val rowTwo: List[Int] = List(3, 4, 8)

@@ -1,4 +1,4 @@
-package prv.ramzez.sudoku.matrix.prv.ramzez.sudoku.matrix.impl
+package prv.ramzez.sudoku.matrix.impl
 
 import prv.ramzez.sudoku.matrix.Matrix
 
