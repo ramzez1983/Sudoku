@@ -7,7 +7,7 @@ import prv.ramzez.sudoku.matrix.Matrix
   */
 trait ExactCover {
 
-  private def chooseColumn(matrix: Matrix): List[Int] = ???
+  private def chooseColumn(matrix: Matrix[Int]): List[Int] = ???
 
   /**
     * Step 5. Reduce matrix
@@ -20,10 +20,10 @@ trait ExactCover {
     * @param row
     * @return
     */
-  private def reduceMatrix(matrix: Matrix, row: Int): Matrix = {
+  private def reduceMatrix(matrix: Matrix[Int], row: Int): Matrix[Int] = {
     val columns2Remove: IndexedSeq[Int] = getIndexesOf1(matrix.getRow(row))
     val rows2Remove: Set[Int] = columns2Remove.flatMap(c => getIndexesOf1(matrix.getColumn(c))).toSet
-    val m1: Matrix = rows2Remove.foldLeft(matrix)((m, i) => m.removeRow(i))
+    val m1: Matrix[Int] = rows2Remove.foldLeft(matrix)((m, i) => m.removeRow(i))
     columns2Remove.foldLeft(m1)((m, j) => m.removeColumn(j))
   }
 
@@ -34,7 +34,7 @@ trait ExactCover {
     * @param matrix
     * @return
     */
-  def solve(currentSolution: Solution, matrix: Matrix): List[Solution] = {
+  def solve(currentSolution: Solution, matrix: Matrix[Int]): List[Solution] = {
     //Step 1. If the matrix A has no columns, the current partial solution is a valid solution; terminate successfully.
     if (matrix.isEmpty) List(currentSolution)
     else {
