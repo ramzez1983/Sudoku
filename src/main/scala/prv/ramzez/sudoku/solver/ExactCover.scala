@@ -50,7 +50,7 @@ trait ExactCover {
     }
   }
 
-  private def getIndexesOf1(col: List[Int]): IndexedSeq[Int] = {
+  private def getIndexesOf1(col: Seq[Int]): IndexedSeq[Int] = {
     (col.length - 1 to 0).filter(col(_) != 0)
   }
 }

@@ -1,8 +1,7 @@
 package prv.ramzez.sudoku.matrix
 
-import prv.ramzez.sudoku.UnitSpec
 import _root_.prv.ramzez.sudoku.matrix.impl.ListMatrix
-import org.scalatest._
+import prv.ramzez.sudoku.UnitSpec
 
 /**
   * Created by Ramzez on 2016-12-21.
