@@ -5,5 +5,5 @@ package prv.ramzez.sudoku
   */
 package object solver {
   val dim = 9
-  type Solution = List[Int]
+  type Solution = Set[Int]
 }
