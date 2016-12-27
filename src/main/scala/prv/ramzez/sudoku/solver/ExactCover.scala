@@ -1,12 +1,13 @@
 package prv.ramzez.sudoku.solver
 
-import prv.ramzez.sudoku.matrix.Matrix
+import prv.ramzez.sudoku.matrix.{LabeledMatrix, Matrix}
 
 /**
   * Created by Ramzez on 2016-12-10.
   */
 trait ExactCover {
 
+  //TODO: implement
   private def chooseColumn(matrix: Matrix[Int]): List[Int] = ???
 
   /**
@@ -20,10 +21,10 @@ trait ExactCover {
     * @param row
     * @return
     */
-  private def reduceMatrix(matrix: Matrix[Int], row: Int): Matrix[Int] = {
+  private def reduceMatrix(matrix: LabeledMatrix[Int,Int], row: Int): LabeledMatrix[Int,Int] = {
     val columns2Remove: IndexedSeq[Int] = getIndexesOf1(matrix.getRow(row))
     val rows2Remove: Set[Int] = columns2Remove.flatMap(c => getIndexesOf1(matrix.getColumn(c))).toSet
-    val m1: Matrix[Int] = rows2Remove.foldLeft(matrix)((m, i) => m.removeRow(i))
+    val m1: LabeledMatrix[Int,Int] = rows2Remove.foldLeft(matrix)((m, i) => m.removeRow(i))
     columns2Remove.foldLeft(m1)((m, j) => m.removeColumn(j))
   }
 
@@ -34,7 +35,7 @@ trait ExactCover {
     * @param matrix
     * @return
     */
-  def solve(currentSolution: Solution, matrix: Matrix[Int]): List[Solution] = {
+  def solve(currentSolution: Solution, matrix: LabeledMatrix[Int,Int]): List[Solution] = {
     //Step 1. If the matrix A has no columns, the current partial solution is a valid solution; terminate successfully.
     if (matrix.isEmpty) List(currentSolution)
     else {
@@ -45,8 +46,7 @@ trait ExactCover {
       //Step 4. Include row r in the partial solution.
       //Step 5. Reduce matrix
       //Step 6. Repeat this algorithm recursively on the reduced matrix.
-      //TODO: problem with proper index of rows in currentSolution after first reduction
-      rows.flatMap(r => solve(r :: currentSolution, reduceMatrix(matrix, r))).filterNot(_.isEmpty).toList
+      rows.flatMap(r => solve(matrix.getRowLabel(r) :: currentSolution, reduceMatrix(matrix, r))).filterNot(_.isEmpty).toList
     }
   }
 

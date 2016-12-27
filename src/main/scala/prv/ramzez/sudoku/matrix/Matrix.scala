@@ -19,4 +19,8 @@ trait Matrix[T] extends ((Int, Int) => T) {
 
 trait LabeledMatrix[L, T] extends Matrix[T] {
   def getRowLabel(r: Int): L
+
+  override def removeColumn(column: Int): LabeledMatrix[L,T]
+
+  override def removeRow(row: Int): LabeledMatrix[L,T]
 }
