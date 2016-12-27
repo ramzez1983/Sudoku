@@ -6,7 +6,8 @@ import prv.ramzez.sudoku.UnitSpec
 /**
   * Created by lukasz.wolanski on 27.12.2016.
   */
-trait MatrixBehaviors {this: UnitSpec =>
+trait MatrixBehaviors {
+  this: UnitSpec =>
 
   val rowOne: List[Int] = List(1, 2, 7)
   val rowTwo: List[Int] = List(3, 4, 8)
@@ -19,7 +20,7 @@ trait MatrixBehaviors {this: UnitSpec =>
   }
 
   def nonEmptyMatrix(newMatrix: List[List[Int]] => Matrix[Int]) {
-    def m = newMatrix(List(rowOne,rowTwo,rowThree))
+    def m = newMatrix(List(rowOne, rowTwo, rowThree))
 
     it should "return elements" in {
       m(0, 0) should be(1)
@@ -32,14 +33,22 @@ trait MatrixBehaviors {this: UnitSpec =>
       m.isEmpty should be(false)
     }
 
-    it should "return rows" in {
+    it should "return specific row" in {
       m.getRow(0) should be(rowOne)
       m.getRow(1) should be(rowTwo)
     }
 
-    it should "return columns" in {
+    it should "return rows" in {
+      m.rows should be(List(rowOne, rowTwo, rowThree))
+    }
+
+    it should "return specific column" in {
       m.getColumn(0) should be(List(1, 3, 5))
       m.getColumn(1) should be(List(2, 4, 6))
+    }
+
+    it should "return columns" in {
+      m.columns should be(List(List(1, 3, 5), List(2, 4, 6), List(7, 8, 9)))
     }
 
     it should "be equal to identical matrix" in {

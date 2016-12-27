@@ -38,4 +38,8 @@ class BasicLabeledMatrix[L, T](val rowLabels: Seq[L], val matrix: Matrix[T]) ext
   }
 
   override def toString = s"BasicLabeledMatrix($rowLabels, $matrix)"
+
+  override def columns: Seq[Seq[T]] = matrix.columns
+
+  override def rows: Seq[Seq[T]] = matrix.rows
 }

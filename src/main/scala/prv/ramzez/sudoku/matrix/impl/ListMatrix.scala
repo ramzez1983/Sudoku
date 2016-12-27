@@ -34,5 +34,9 @@ class ListMatrix[T](private val store: Seq[Seq[T]]) extends Matrix[T] {
   }
 
   override def toString = s"ListMatrix($store)"
+
+  override def columns: Seq[Seq[T]] = (0 until store.size).map(getColumn(_))
+
+  override def rows: Seq[Seq[T]] = store
 }
 

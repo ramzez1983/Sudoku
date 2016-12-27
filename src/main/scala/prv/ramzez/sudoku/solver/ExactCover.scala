@@ -7,8 +7,7 @@ import prv.ramzez.sudoku.matrix.{LabeledMatrix, Matrix}
   */
 trait ExactCover {
 
-  //TODO: implement
-  private def chooseColumn(matrix: Matrix[Int]): List[Int] = ???
+  private def chooseColumn(matrix: Matrix[Int]): Seq[Int] = matrix.columns.sortBy(_.size).head
 
   /**
     * Step 5. Reduce matrix
