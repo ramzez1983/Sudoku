@@ -7,11 +7,14 @@ import scala.annotation.tailrec
 /**
   * Created by Ramzez on 2016-12-10.
   */
-trait ExactCover {
+trait ExactCover[L,T] {
+  type Solution = Set[L]
 
-  def predicate(p: Int): Boolean = p == 1
+  def unit: T
 
-  def chooseColumn(matrix: Matrix[Int]): Seq[Int] = matrix.columns.sortBy(l => l.filter(predicate).size).head
+  def predicate(p: T): Boolean = p == unit
+
+  def chooseColumn(matrix: Matrix[T]): Seq[T] = matrix.columns.sortBy(l => l.filter(predicate).size).head
 
   /**
     * Step 5. Reduce matrix
@@ -24,10 +27,10 @@ trait ExactCover {
     * @param row
     * @return
     */
-  def reduceMatrix(matrix: LabeledMatrix[Int,Int], row: Int): LabeledMatrix[Int,Int] = {
+  def reduceMatrix(matrix: LabeledMatrix[L,T], row: L): LabeledMatrix[L,T] = {
     val columns2Remove: IndexedSeq[Int] = getIndexesOf1(matrix.getRow(row))
     val rows2Remove: Set[Int] = columns2Remove.flatMap(c => getIndexesOf1(matrix.getColumn(c))).toSet
-    val m1: LabeledMatrix[Int,Int] = rows2Remove.foldLeft(matrix)((m, i) => m.removeRow(i))
+    val m1: LabeledMatrix[L,T] = rows2Remove.foldLeft(matrix)((m, i) => m.removeRow(i))
     columns2Remove.foldLeft(m1)((m, j) => m.removeColumn(j))
   }
 
@@ -38,7 +41,7 @@ trait ExactCover {
     * @param matrix
     * @return
     */
-  def solve(currentSolution: Solution, matrix: LabeledMatrix[Int,Int]): Set[Solution] = {
+  def solve(currentSolution: Solution, matrix: LabeledMatrix[L,T]): Set[Solution] = {
     //Step 1. If the matrix A has no columns, the current partial solution is a valid solution; terminate successfully.
     if (matrix.isEmpty) Set(currentSolution)
     else {
@@ -49,11 +52,11 @@ trait ExactCover {
       //Step 4. Include row r in the partial solution.
       //Step 5. Reduce matrix
       //Step 6. Repeat this algorithm recursively on the reduced matrix.
-      rows.flatMap(r => solve(currentSolution + matrix.getRowLabel(r), reduceMatrix(matrix, r))).filterNot(_.isEmpty).toSet
+      rows.flatMap(r => solve(currentSolution + matrix.getRowLabel(r), reduceMatrix(matrix, matrix.getRowLabel(r)))).filterNot(_.isEmpty).toSet
     }
   }
 
-  def getIndexesOf1(col: Seq[Int]): IndexedSeq[Int] = {
+  def getIndexesOf1(col: Seq[T]): IndexedSeq[Int] = {
     (col.size - 1 to 0 by -1).filter(col andThen predicate)
   }
 }

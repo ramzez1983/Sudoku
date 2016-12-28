@@ -10,6 +10,8 @@ class BasicLabeledMatrix[L, T](val rowLabels: Seq[L], val matrix: Matrix[T]) ext
 
   override def getRow(row: Int): Seq[T] = matrix.getRow(row)
 
+  override def getRow(row: L): Seq[T] = getRow(rowLabels.indexOf(row))
+
   override def removeRow(row: Int): BasicLabeledMatrix[L, T] =
     new BasicLabeledMatrix[L, T](rowLabels.take(row) ++ rowLabels.drop(row + 1), matrix.removeRow(row))
 

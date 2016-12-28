@@ -5,5 +5,4 @@ package prv.ramzez.sudoku
   */
 package object solver {
   val dim = 9
-  type Solution = Set[Int]
 }

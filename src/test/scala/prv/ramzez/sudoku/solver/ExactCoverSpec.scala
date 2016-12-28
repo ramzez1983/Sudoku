@@ -7,7 +7,8 @@ import prv.ramzez.sudoku.matrix.impl.{BasicLabeledMatrix, ListMatrix}
 /**
   * Created by Ramzez on 2016-12-21.
   */
-class ExactCoverSpec extends UnitSpec with ExactCover {
+class ExactCoverSpec extends UnitSpec with ExactCover[Int,Int] {
+  override val unit = 1
   def withNoSolutionMatrix(testCode: LabeledMatrix[Int, Int] => Any) {
     val matrix = new BasicLabeledMatrix[Int, Int](1 to 4, new ListMatrix(List(
       List(1, 0, 0), //1

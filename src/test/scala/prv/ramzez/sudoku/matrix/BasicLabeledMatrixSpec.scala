@@ -14,20 +14,30 @@ class BasicLabeledMatrixSpec extends UnitSpec with MatrixBehaviors {
     case _ => list.map(m => m.head)
   }, new ListMatrix(list))
 
+  def withLabeledMatrix(testCode: LabeledMatrix[String, Int] => Any): Unit = {
+    val m = new BasicLabeledMatrix[String, Int](List("rowOne", "rowTwo", "rowThree"), new ListMatrix[Int](List(rowOne, rowTwo, rowThree)))
+    testCode(m)
+  }
+
   "An empty BasicLabeledMatrix" should behave like emptyMatrix(newMatrix(List(List())))
 
   "A BasicLabeledMatrix" should behave like nonEmptyMatrix(newMatrix)
 
-  it should "return row label" in {
-    val m = new BasicLabeledMatrix[String, Int](List("rowOne", "rowTwo", "rowThree"), new ListMatrix[Int](List(rowOne, rowTwo, rowThree)))
+  it should "return row label" in withLabeledMatrix { (m) =>
     m.getRowLabel(0) should be("rowOne")
     m.getRowLabel(1) should be("rowTwo")
     m.getRowLabel(2) should be("rowThree")
   }
 
-  it should "return row label after removing row" in {
-    val m = new BasicLabeledMatrix[String, Int](List("rowOne", "rowTwo", "rowThree"), new ListMatrix[Int](List(rowOne, rowTwo, rowThree))).removeRow(1)
-    m.getRowLabel(0) should be("rowOne")
-    m.getRowLabel(1) should be("rowThree")
+  it should "return row label after removing row" in withLabeledMatrix { (m) =>
+    val m1 = m.removeRow(1)
+    m1.getRowLabel(0) should be("rowOne")
+    m1.getRowLabel(1) should be("rowThree")
+  }
+
+  it should "return row by labels" in withLabeledMatrix { (m) =>
+    (0 until 3).foreach { (x) =>
+      m.getRow(x) shouldEqual (m.getRow(m.getRowLabel(x)))
+    }
   }
 }
