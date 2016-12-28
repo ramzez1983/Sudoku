@@ -8,6 +8,15 @@ import prv.ramzez.sudoku.matrix.impl.{BasicLabeledMatrix, ListMatrix}
   * Created by Ramzez on 2016-12-21.
   */
 class ExactCoverSpec extends UnitSpec with ExactCover {
+  def withNoSolutionMatrix(testCode: LabeledMatrix[Int, Int] => Any) {
+    val matrix = new BasicLabeledMatrix[Int, Int](1 to 4, new ListMatrix(List(
+      List(1, 0, 0), //1
+      List(1, 1, 0), //2
+      List(0, 1, 0), //3
+      List(0, 0, 0)  //4
+    )))
+    testCode(matrix)
+  }
   def withSmallMatrix(testCode: LabeledMatrix[Int, Int] => Any) {
     val matrix = new BasicLabeledMatrix[Int, Int](1 to 4, new ListMatrix(List(
       List(1, 0, 0), //1
@@ -24,7 +33,7 @@ class ExactCoverSpec extends UnitSpec with ExactCover {
       List(0, 0, 0, 1, 1, 0, 1), //3
       List(0, 0, 1, 0, 1, 1, 0), //4
       List(0, 1, 0, 0, 0, 1, 1), //5
-      List(0, 1, 0, 0, 0, 0, 1) //6
+      List(0, 1, 0, 0, 0, 0, 1)  //6
     )))
     testCode(matrix)
   }
@@ -39,5 +48,9 @@ class ExactCoverSpec extends UnitSpec with ExactCover {
 
   it should "return all solutions" in withSmallMatrix { (matrix) =>
     solve(Set(), matrix) shouldEqual Set(Set(1, 3, 4), Set(2,3))
+  }
+
+  it should "return no solutions" in withNoSolutionMatrix { (matrix) =>
+    solve(Set(), matrix) shouldEqual Set()
   }
 }

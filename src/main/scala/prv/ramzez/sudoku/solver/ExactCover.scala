@@ -9,7 +9,9 @@ import scala.annotation.tailrec
   */
 trait ExactCover {
 
-  def chooseColumn(matrix: Matrix[Int]): Seq[Int] = matrix.columns.sortBy(l => l.filter(_ == 1).size).head
+  def predicate(p: Int): Boolean = p == 1
+
+  def chooseColumn(matrix: Matrix[Int]): Seq[Int] = matrix.columns.sortBy(l => l.filter(predicate).size).head
 
   /**
     * Step 5. Reduce matrix
@@ -52,6 +54,6 @@ trait ExactCover {
   }
 
   def getIndexesOf1(col: Seq[Int]): IndexedSeq[Int] = {
-    (col.size - 1 to 0 by -1).filter(col(_) != 0)
+    (col.size - 1 to 0 by -1).filter(col andThen predicate)
   }
 }
