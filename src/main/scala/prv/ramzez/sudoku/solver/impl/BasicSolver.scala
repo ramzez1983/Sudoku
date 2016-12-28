@@ -12,22 +12,19 @@ object BasicSolver extends ExactCover[Posibility,Int] with App {
 
   override val unit: Int = 1
 
+  val dim = 3
+
   def readFile(filePath: String): Source = ???
 
   def parseToPosibility: String => Posibility = ???
 
   val initialMatrix = ???
-  //TODO: parametrise ExactCover
-/*
   args match {
     case Array(filePath: String) => {
-      val startPosition = readFile(filePath).getLines.map(parseToPosibility)
-      solve(startPosition,startPosition.foldLeft(initialMatrix)(reduceMatrix))
-        //.foldLeft[Board](EmptyBoard(3))((b, p) => b ++ p)
-
+      val startPosition = readFile(filePath).getLines.map(parseToPosibility).toSet
+      val solutions = solve(startPosition,startPosition.foldLeft(initialMatrix)(reduceMatrix))
+      solutions.map(s => s.foldLeft[Board](EmptyBoard(dim))((b, p) => b ++ p)).foreach(b => System.out.println(b.mkString(" ","\n")))
     }
     case _ => throw new IllegalArgumentException("provide exactly one argument: path to input file")
   }
-*/
-
 }
